@@ -1,0 +1,14 @@
+<mat-progress-bar *ngIf="isLoading" mode="buffer"></mat-progress-bar>
+
+<h3>Pacient List</h3>
+
+<div *ngFor="let paciente of pacientes">
+  <h4>{{ paciente.id }}. {{ paciente.nombre }} {{ paciente.apellido }}</h4>
+  <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }}</p>
+  <p><strong>Género:</strong> {{ paciente.genero }}</p>
+  <p><strong>Dirección:</strong> {{ paciente.direccion }}</p>
+  <p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
+  <p><strong>Correo Electrónico:</strong> {{ paciente.correo_electronico }}</p>
+  <p><strong>Cédula de Identidad:</strong> {{ paciente.cedula_identidad }}</p>
+  <hr />
+</div>
