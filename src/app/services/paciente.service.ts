@@ -20,6 +20,7 @@ export class PacienteService {
       .pipe(
         map((response) => {
           this.token = response.access;
+          localStorage.setItem('authToken', this.token); // Guardamos en local storage
         })
       );
   }
@@ -34,5 +35,15 @@ export class PacienteService {
     });
 
     return this.http.get<Paciente[]>(this.pacientesUrl, { headers });
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('authToken');
+    return !!token;
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
+    this.token = null;
   }
 }

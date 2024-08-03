@@ -1,0 +1,22 @@
+.mat-column-id {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.table {
+  width: 100% !important;
+  margin-top: 25px;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  /*border-color: currentColor;*/
+  background-color: rgba($color: #eb9efa, $alpha: 0.05);
+}

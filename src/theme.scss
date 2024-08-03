@@ -1,0 +1,25 @@
+@use "@angular/material" as mat;
+
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+    ),
+  )
+);
+
+@include mat.core();
+@include mat.color-variants-backwards-compatibility($theme);
+
+@mixin theme($theme) {
+  mat-toolbar {
+    background: mat.get-theme-color($theme, primary);
+  }
+}
+
+:root {
+  @include mat.core-theme($theme);
+  @include mat.all-component-themes($theme);
+  @include theme($theme);
+}

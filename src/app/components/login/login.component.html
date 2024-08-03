@@ -1,0 +1,41 @@
+<mat-card class="login-card">
+  <mat-card-header class="card-header-margin">
+    <mat-card-title>
+      <mat-icon>account_circle</mat-icon>
+      Iniciar Sesión
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="username" required />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          [type]="'password'"
+          formControlName="password"
+          required
+        />
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+      <button
+        class="mat-raised-button"
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="isLoading || !loginForm.valid"
+      >
+        <mat-icon>login</mat-icon>
+        Iniciar Sesión
+      </button>
+      <mat-progress-bar
+        *ngIf="isLoading"
+        mode="indeterminate"
+      ></mat-progress-bar>
+    </form>
+  </mat-card-content>
+</mat-card>

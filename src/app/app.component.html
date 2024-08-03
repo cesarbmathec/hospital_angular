@@ -1,9 +1,22 @@
 <mat-toolbar>
-  <span>My App</span>
+  <nav>
+    <a mat-flat-button class="my-button" routerLink="">
+      <i class="fa-solid fa-home"></i> My App</a
+    >
+  </nav>
   <span class="toolbar-spacer"></span>
-  <a mat-button href="pacienteList/">
-    <i class="fa-solid fa-person"></i> Paciente
-  </a>
+  <nav>
+    <a mat-flat-button class="my-button" routerLink="pacienteList">
+      <i class="fa-solid fa-person"></i> Paciente
+    </a>
+  </nav>
+  <nav>
+    <a mat-flat-button class="my-button" routerLink="logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+  </nav>
 </mat-toolbar>
 
-<router-outlet />
+<div class="body-container">
+  <router-outlet />
+</div>
