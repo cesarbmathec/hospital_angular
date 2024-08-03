@@ -1,10 +1,11 @@
+@use "sass:map";
 @use "@angular/material" as mat;
 
 $theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: mat.$azure-palette,
+      primary: mat.$cyan-palette,
     ),
   )
 );
@@ -12,14 +13,28 @@ $theme: mat.define-theme(
 @include mat.core();
 @include mat.color-variants-backwards-compatibility($theme);
 
+@mixin color($theme) {
+  a.my-button {
+    // Read the 50 hue from the primary color palette.
+    color: rgb(
+      0,
+      221,
+      221
+    ); // mat.get-theme-color($theme, surface-container-high);
+  }
+}
+
 @mixin theme($theme) {
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
   mat-toolbar {
     background: mat.get-theme-color($theme, primary);
   }
 }
-
 :root {
+  @include theme($theme);
   @include mat.core-theme($theme);
   @include mat.all-component-themes($theme);
-  @include theme($theme);
 }

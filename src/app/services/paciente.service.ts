@@ -14,7 +14,7 @@ export class PacienteService {
 
   constructor(private http: HttpClient) {}
 
-  authenticate(username: string, password: string): Observable<void> {
+  public authenticate(username: string, password: string): Observable<void> {
     return this.http
       .post<{ access: string }>(this.authUrl, { username, password })
       .pipe(
@@ -25,7 +25,7 @@ export class PacienteService {
       );
   }
 
-  getPacientes(): Observable<Paciente[]> {
+  public getPacientes(): Observable<Paciente[]> {
     if (!this.token) {
       throw new Error('Token no disponible. Primero autentíquese.');
     }
@@ -37,12 +37,12 @@ export class PacienteService {
     return this.http.get<Paciente[]>(this.pacientesUrl, { headers });
   }
 
-  isAuthenticated(): boolean {
+  public isAuthenticated(): boolean {
     const token = localStorage.getItem('authToken');
     return !!token;
   }
 
-  logout(): void {
+  public logout(): void {
     localStorage.removeItem('authToken');
     this.token = null;
   }
