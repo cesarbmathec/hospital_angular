@@ -1,0 +1,17 @@
+<span class="button-close" matSnackBarLabel>
+  Usuario o Password <strong>Incorrecto</strong>. Verifique los datos
+  suministrados!!
+</span>
+<span matSnackBarActions>
+  <button
+    mat-icon-button
+    matSnackBarAction
+    (click)="snackBarRef.dismissWithAction()"
+  >
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="close"
+    ></mat-icon>
+  </button>
+</span>

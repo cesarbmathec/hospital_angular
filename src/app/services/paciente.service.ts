@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Paciente } from '../interfaces/paciente';
 
 @Injectable({
@@ -34,12 +34,20 @@ export class PacienteService {
       Authorization: `Bearer ${this.token}`,
     });
 
-    return this.http.get<Paciente[]>(this.pacientesUrl, { headers });
+    return this.http.get<Paciente[]>(this.pacientesUrl, { headers }).pipe(
+      catchError((error) => {
+        if (error.status === 401) {
+          // Token expirado o inválido, redirigir al login
+          this.logout();
+        }
+        return throwError(error);
+      })
+    );
   }
 
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem('authToken');
-    return !!token;
+    this.token = localStorage.getItem('authToken');
+    return !!this.token;
   }
 
   public logout(): void {

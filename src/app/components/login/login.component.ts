@@ -1,33 +1,41 @@
-import { Component } from '@angular/core';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
+import { Component, signal } from '@angular/core';
+import { MatError, MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import {
-  MatCard,
   MatCardContent,
   MatCardHeader,
+  MatCardModule,
   MatCardTitle,
 } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
-import { MatProgressBar } from '@angular/material/progress-bar';
-import { MatFormField } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatLabel } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { PacienteService } from '../../services/paciente.service';
+import { noWhitespaceValidator } from './validators';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatSnackBarHorizontalPosition,
+  MatSnackBar,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    MatInput,
-    MatButton,
-    MatCard,
-    MatIcon,
-    MatProgressBar,
-    MatFormField,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatFormFieldModule,
     MatLabel,
+    MatError,
     MatCardHeader,
     MatCardTitle,
     MatCardContent,
@@ -44,12 +52,19 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private pacienteService: PacienteService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      username: ['', [Validators.required, noWhitespaceValidator]],
+      password: ['', [Validators.required, noWhitespaceValidator]],
     });
+  }
+
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
   onSubmit(): void {
@@ -64,8 +79,10 @@ export class LoginComponent {
         },
         error: (err: any) => {
           this.isLoading = false;
-          alert('Error en el inicio de sesión');
-          console.error(err);
+          this._snackBar.openFromComponent(AlertComponent, {
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
         },
       });
     }

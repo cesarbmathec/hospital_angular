@@ -1,26 +1,45 @@
 <mat-card class="login-card">
   <mat-card-header class="card-header-margin">
     <mat-card-title>
-      <mat-icon>account_circle</mat-icon>
+      <i class="fa-solid fa-user-circle"></i>
       Iniciar Sesión
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
-        <mat-label>Usuario</mat-label>
+      <mat-form-field>
+        <mat-label><i class="fa-solid fa-user"></i> Usuario</mat-label>
         <input matInput formControlName="username" required />
-        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+          - Requerido
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('username')?.hasError('whitespace')">
+          - No puede contener solo espacios en blanco
+        </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Contraseña</mat-label>
+      <mat-form-field>
+        <mat-label><i class="fa-solid fa-lock"></i> Contraseña</mat-label>
         <input
           matInput
-          [type]="'password'"
+          [type]="hide() ? 'password' : 'text'"
           formControlName="password"
           required
         />
-        <mat-icon matSuffix>lock</mat-icon>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="clickEvent($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          - Requerida
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('whitespace')">
+          - No puede contener solo espacios en blanco
+        </mat-error>
       </mat-form-field>
       <button
         class="mat-raised-button"
