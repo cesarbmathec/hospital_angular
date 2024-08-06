@@ -1,18 +1,23 @@
 <mat-toolbar>
-  <nav>
-    <a mat-flat-button class="my-button" routerLink="">
-      <i class="fa-solid fa-home"></i> My App</a
-    >
+  <nav *ngIf="authenticated">
+    <a mat-icon-button matTooltip="Home" class="my-button" routerLink="home">
+      <i class="fa-solid fa-home"></i
+    ></a>
   </nav>
   <span class="toolbar-spacer"></span>
-  <nav>
-    <a mat-flat-button class="my-button" routerLink="pacienteList">
-      <i class="fa-solid fa-person"></i> Paciente
+  <nav *ngIf="authenticated">
+    <a mat-icon-button class="my-button" routerLink="pacienteList">
+      <i class="fa-solid fa-list"></i>
     </a>
   </nav>
-  <nav>
-    <a mat-flat-button class="my-button" routerLink="logout">
-      <i class="fa-solid fa-right-from-bracket"></i> Logout
+  <nav *ngIf="authenticated">
+    <a mat-icon-button class="my-button" routerLink="logout">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+  </nav>
+  <nav *ngIf="!authenticated">
+    <a mat-icon-button class="my-button" routerLink="register">
+      <i class="fa-solid fa-user-plus"></i>
     </a>
   </nav>
 </mat-toolbar>

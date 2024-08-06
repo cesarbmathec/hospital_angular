@@ -1,0 +1,24 @@
+<mat-card class="not-found-card">
+  <mat-card-header>
+    <mat-card-title>
+      <i class="fas fa-exclamation-triangle"></i>
+      Página no encontrada
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <i class="fas fa-info-circle"></i>
+      La página que estás buscando no existe.
+    </p>
+    <div style="display: flex">
+      <button mat-button routerLink="/home">
+        <i class="fas fa-home"></i>
+        Ir a la página de inicio
+      </button>
+      <button mat-button routerLink="/login">
+        <i class="fas fa-user"></i>
+        Ir a login
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,46 @@
+/* not-found.component.scss */
+.not-found-card {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px;
+  text-align: center;
+}
+
+.not-found-card mat-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.not-found-card mat-card-title i {
+  margin-right: 10px;
+  font-size: 2rem;
+}
+
+.not-found-card mat-card-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.not-found-card mat-card-content p i {
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+
+.not-found-card mat-card-content button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.not-found-card mat-card-content button {
+  margin-top: 15px;
+}
+
+.not-found-card mat-card-content button i {
+  margin-right: 5px;
+  font-size: 1.2rem;
+}

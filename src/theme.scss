@@ -5,7 +5,7 @@ $theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: mat.$blue-palette,
+      primary: mat.$cyan-palette,
     ),
   )
 );
@@ -14,6 +14,10 @@ $theme: mat.define-theme(
 @include mat.color-variants-backwards-compatibility($theme);
 
 @mixin color($theme) {
+  .my-button {
+    padding: 6px;
+    font-size: 14pt;
+  }
   a.my-button {
     // Read the 50 hue from the primary color palette.
     color: rgb(
@@ -21,6 +25,24 @@ $theme: mat.define-theme(
       219,
       255
     ); // mat.get-theme-color($theme, surface-container-high);
+    background-color: rgb(0, 139, 128);
+    padding: 6px;
+    font-size: 14pt;
+  }
+  .botton-icon-warn {
+    color: rgb(209, 137, 3);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.253);
+    background-color: rgb(253, 249, 234);
+  }
+  .botton-icon-danger {
+    color: #ba1a1a;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.253);
+    background-color: rgb(253, 234, 234);
+  }
+  .botton-icon-primary {
+    color: #067b9e;
+    background-color: rgb(225, 248, 248);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.253) !important;
   }
 }
 

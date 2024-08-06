@@ -1,5 +1,5 @@
 <mat-card class="login-card">
-  <mat-card-header class="card-header-margin">
+  <mat-card-header class="login-card-header">
     <mat-card-title>
       <i class="fa-solid fa-user-circle"></i>
       Iniciar Sesión
@@ -31,6 +31,7 @@
           (click)="clickEvent($event)"
           [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide()"
+          type="button"
         >
           <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
@@ -42,11 +43,11 @@
         </mat-error>
       </mat-form-field>
       <button
-        class="mat-raised-button"
         mat-flat-button
         color="primary"
         type="submit"
         [disabled]="isLoading || !loginForm.valid"
+        class="mat-flat-button"
       >
         <mat-icon>login</mat-icon>
         Iniciar Sesión

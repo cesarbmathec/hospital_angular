@@ -1,12 +1,41 @@
-:host {
+.alert {
   display: flex;
-  background-color: rgb(255, 213, 213);
   padding: 5px;
-  border: 1px solid rgb(128, 2, 8);
   border-radius: 4px;
-}
-
-.button-close {
-  color: rgb(128, 2, 8);
-  font-size: 12pt;
+  // Danger
+  &.danger {
+    background-color: rgb(255, 213, 213);
+    border: 1px solid rgb(128, 2, 8);
+    color: rgb(128, 2, 8);
+  }
+  &.danger mat-icon {
+    color: rgb(128, 2, 8);
+  }
+  // Success
+  &.success {
+    background-color: rgb(213, 255, 237);
+    border: 1px solid rgb(1, 78, 53);
+    color: rgb(1, 78, 53);
+  }
+  &.success mat-icon {
+    color: rgb(1, 78, 53);
+  }
+  // Warning
+  &.warning {
+    background-color: rgb(255, 243, 213);
+    border: 1px solid rgb(255, 196, 2);
+    color: rgb(255, 196, 2);
+  }
+  &.warning mat-icon {
+    color: rgb(255, 196, 2);
+  }
+  // Info
+  &.info {
+    background-color: rgb(213, 243, 255);
+    border: 1px solid rgb(2, 126, 143);
+    color: rgb(2, 126, 143);
+  }
+  &.info mat-icon {
+    color: rgb(2, 126, 143);
+  }
 }

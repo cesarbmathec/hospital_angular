@@ -9,20 +9,20 @@ import {
 } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatLabel } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { PacienteService } from '../../services/paciente.service';
-import { noWhitespaceValidator } from './validators';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {
-  MatSnackBarHorizontalPosition,
-  MatSnackBar,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertComponent } from '../alert/alert.component';
+import { noWhitespaceValidator } from '../validators/validators';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -51,7 +51,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private pacienteService: PacienteService,
+    private authService: AuthService,
     private router: Router,
     private _snackBar: MatSnackBar
   ) {
@@ -72,16 +72,22 @@ export class LoginComponent {
       this.isLoading = true;
       const { username, password } = this.loginForm.value;
       // Autenticación
-      this.pacienteService.authenticate(username, password).subscribe({
+      this.authService.authenticate(username, password).subscribe({
         next: () => {
           this.isLoading = false;
-          this.router.navigate(['/']);
+          this.router.navigate(['home']);
         },
         error: (err: any) => {
           this.isLoading = false;
           this._snackBar.openFromComponent(AlertComponent, {
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
+            duration: 7 * 1000,
+            data: {
+              message:
+                'Usuario o Password <strong>Incorrecto</strong>. Verifique los datos suministrados!!',
+              class: 'alert danger',
+            },
           });
         },
       });

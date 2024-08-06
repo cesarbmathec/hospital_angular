@@ -1,0 +1,31 @@
+.add-paciente-card {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.add-paciente-card-header {
+  margin-bottom: 25px;
+}
+
+.paciente-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; // Espacio entre los elementos
+  margin-bottom: 16px; // Espacio inferior de cada fila
+}
+
+.form-field {
+  flex: 1 1 calc(50% - 16px); // Tamaño de cada campo, ocupando el 50% del contenedor menos el espacio entre los campos
+  min-width: 200px; // Ancho mínimo de cada campo para asegurar la responsividad
+}
+
+@media (max-width: 600px) {
+  .form-field {
+    flex: 1 1 100%; // En pantallas pequeñas, cada campo ocupa el 100% del ancho
+  }
+}

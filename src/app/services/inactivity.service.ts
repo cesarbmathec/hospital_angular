@@ -1,17 +1,17 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { PacienteService } from './paciente.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InactivityService {
   private timeoutId: any;
-  private readonly timeoutDuration = 1000 * 60 * 1; // 1 minutos en milisegundos
+  private readonly timeoutDuration = 1000 * 60 * 3; // 1 minutos en milisegundos
 
   constructor(
     private router: Router,
-    private pacienteService: PacienteService,
+    private autheService: AuthService,
     private ngZone: NgZone
   ) {
     this.startWatching();
@@ -40,7 +40,7 @@ export class InactivityService {
   }
 
   private logout(): void {
-    this.pacienteService.logout();
+    this.autheService.logout();
     this.router.navigate(['/login']);
   }
 }
