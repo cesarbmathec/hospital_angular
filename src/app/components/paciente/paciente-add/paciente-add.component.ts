@@ -5,10 +5,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { PacienteService } from '../../services/paciente.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { noWhitespaceValidator } from '../validators/validators';
 import {
   MatCardContent,
   MatCardHeader,
@@ -21,7 +19,9 @@ import { NgIf } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { AlertComponent } from '../alert/alert.component';
+import { PacienteService } from '../../../services/paciente.service';
+import { noWhitespaceValidator } from '../../validators/validators';
+import { AlertComponent } from '../../alert/alert.component';
 
 @Component({
   selector: 'app-paciente-add',

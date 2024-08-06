@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 })
 export class InactivityService {
   private timeoutId: any;
-  private readonly timeoutDuration = 1000 * 60 * 3; // 1 minutos en milisegundos
+  private readonly timeoutDuration = 1000 * 60 * 7; // 1 minutos en milisegundos
 
   constructor(
     private router: Router,

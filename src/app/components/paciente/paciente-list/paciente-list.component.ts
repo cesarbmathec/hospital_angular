@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
-import { Paciente } from '../../interfaces/paciente';
 
 import { Router, RouterModule } from '@angular/router';
 import {
@@ -12,8 +11,9 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from '../../services/auth.service';
-import { PacienteService } from '../../services/paciente.service';
+import { Paciente } from '../../../interfaces/paciente';
+import { AuthService } from '../../../services/auth.service';
+import { PacienteService } from '../../../services/paciente.service';
 
 @Component({
   selector: 'app-paciente-list',
