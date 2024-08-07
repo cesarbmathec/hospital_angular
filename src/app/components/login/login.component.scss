@@ -1,6 +1,10 @@
+.login-container {
+  padding-top: 80px;
+}
+
 .login-card {
   max-width: 400px;
-  margin: 20px auto;
+  margin: 0px auto;
   padding: 20px;
   .mat-card-title {
     display: flex;
@@ -20,4 +24,9 @@
 
 .login-card-header {
   margin-bottom: 25px;
+}
+
+.button-register {
+  margin: 20px;
+  text-align: center;
 }

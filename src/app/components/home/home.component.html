@@ -1,1 +1,36 @@
-<p>home works!</p>
+<mat-toolbar class="mat-toolbar-custom">
+  <p>
+    <a mat-icon-button (click)="sidenav.toggle()" class="my-button">
+      <i class="fa-solid fa-bars"></i>
+    </a>
+  </p>
+  <span class="toolbar-spacer"></span>
+  <nav>
+    <a mat-icon-button class="my-button" routerLink="/logout">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+  </nav>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    opened
+    fixedInViewport="true"
+    fixedBottomGap="0"
+    fixedTopGap="0"
+  >
+    <!-- Menú -->
+    <mat-nav-list>
+      <a mat-list-item class="menu-item" routerLink="paciente"
+        ><i class="fas fa-person icon-item"></i> Paciente</a
+      >
+      <a mat-list-item class="menu-item" routerLink=""
+        ><i class="fas fa-list icon-item"></i> Historias Clínicas</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content> <router-outlet /> </mat-sidenav-content>
+</mat-sidenav-container>

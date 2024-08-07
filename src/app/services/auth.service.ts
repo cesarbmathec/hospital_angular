@@ -24,11 +24,11 @@ export class AuthService {
     const refreshToken = localStorage.getItem('refreshToken');
     if (token) {
       this.token.access = token;
-      this.authenticated.next(true);
     }
     if (refreshToken) {
       this.token.refresh = refreshToken;
     }
+    this.authenticated.next(true);
   }
 
   getAccessToken(): string | null {

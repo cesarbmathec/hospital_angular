@@ -1,5 +1,5 @@
 .table {
-  border-color: rgb(218, 218, 218);
+  border-color: 1px solid rgb(218, 218, 218);
 }
 .mat-column-id {
   width: 32px;
@@ -19,14 +19,13 @@
 }
 
 .paciente-list-card {
-  margin-top: 20px;
-  border: 1px solid #bbb;
+  border: 1px solid #dbdbdb;
 }
 
 .paciente-list-card-header {
   margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
+  display: block;
+  /*justify-content: space-between;*/
 }
 
 .elevation-button {
@@ -35,4 +34,25 @@
 
 .my-button {
   margin-left: 5px;
+}
+
+.table-container {
+  overflow-x: auto;
+  border: 1px solid rgb(218, 218, 218);
+  border-radius: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.custom-header-cell {
+  padding: 8px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0; /* Borde inferior personalizado */
+}
+
+.custom-header-row {
+  background-color: #f8f8f8;
 }

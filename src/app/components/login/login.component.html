@@ -1,61 +1,70 @@
-<mat-card class="login-card">
-  <mat-card-header class="login-card-header">
-    <mat-card-title>
-      <i class="fa-solid fa-user-circle"></i>
-      Iniciar Sesión
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field>
-        <mat-label><i class="fa-solid fa-user"></i> Usuario</mat-label>
-        <input matInput formControlName="username" required />
-        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
-          - Requerido
-        </mat-error>
-        <mat-error *ngIf="loginForm.get('username')?.hasError('whitespace')">
-          - No puede contener solo espacios en blanco
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label><i class="fa-solid fa-lock"></i> Contraseña</mat-label>
-        <input
-          matInput
-          [type]="hide() ? 'password' : 'text'"
-          formControlName="password"
-          required
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="clickEvent($event)"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide()"
-          type="button"
-        >
-          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
-        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-          - Requerida
-        </mat-error>
-        <mat-error *ngIf="loginForm.get('password')?.hasError('whitespace')">
-          - No puede contener solo espacios en blanco
-        </mat-error>
-      </mat-form-field>
-      <button
-        mat-flat-button
-        color="primary"
-        type="submit"
-        [disabled]="isLoading || !loginForm.valid"
-        class="mat-flat-button"
-      >
-        <mat-icon>login</mat-icon>
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header class="login-card-header">
+      <mat-card-title>
+        <i class="fa-solid fa-user-circle"></i>
         Iniciar Sesión
-      </button>
-      <mat-progress-bar
-        *ngIf="isLoading"
-        mode="indeterminate"
-      ></mat-progress-bar>
-    </form>
-  </mat-card-content>
-</mat-card>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <mat-label><i class="fa-solid fa-user"></i> Usuario</mat-label>
+          <input matInput formControlName="username" required />
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+            - Requerido
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('whitespace')">
+            - No puede contener solo espacios en blanco
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label><i class="fa-solid fa-lock"></i> Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hide() ? 'password' : 'text'"
+            formControlName="password"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="clickEvent($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide()"
+            type="button"
+          >
+            <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            - Requerida
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('whitespace')">
+            - No puede contener solo espacios en blanco
+          </mat-error>
+        </mat-form-field>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="isLoading || !loginForm.valid"
+          class="mat-flat-button"
+        >
+          <mat-icon>login</mat-icon>
+          Iniciar Sesión
+        </button>
+        <mat-progress-bar
+          *ngIf="isLoading"
+          mode="indeterminate"
+        ></mat-progress-bar>
+      </form>
+      <div
+        class="button-register"
+        routerLink="register"
+        routerLinkActive="router-link-active"
+      >
+        <a mat-button>Registrate aquí</a>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

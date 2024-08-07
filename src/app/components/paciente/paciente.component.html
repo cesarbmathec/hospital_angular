@@ -1,1 +1,24 @@
-<p>paciente works!</p>
+<mat-toolbar>
+  <span>Paciente</span>
+  <span class="mat-toolbar-spacer"></span>
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+    routerLink="pacienteList"
+    class="my-button"
+  >
+    <mat-icon>list</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="my-button"
+    aria-label="Example icon-button with share icon"
+    routerLink="pacienteAdd"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="paciente-container">
+  <router-outlet />
+</div>

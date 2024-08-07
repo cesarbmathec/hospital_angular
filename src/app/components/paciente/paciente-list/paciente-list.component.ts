@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatProgressBar } from '@angular/material/progress-bar';
-import { MatTableModule } from '@angular/material/table';
+import {
+  MatProgressBar,
+  MatProgressBarModule,
+} from '@angular/material/progress-bar';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 import { Router, RouterModule } from '@angular/router';
 import {
@@ -14,13 +17,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { Paciente } from '../../../interfaces/paciente';
 import { AuthService } from '../../../services/auth.service';
 import { PacienteService } from '../../../services/paciente.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-paciente-list',
   standalone: true,
   imports: [
     CommonModule,
-    MatProgressBar,
+    MatProgressBarModule,
     MatTableModule,
     MatCardModule,
     MatCardHeader,
@@ -29,15 +36,22 @@ import { PacienteService } from '../../../services/paciente.service';
     MatCardContent,
     MatButtonModule,
     RouterModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatPaginatorModule,
   ],
   templateUrl: './paciente-list.component.html',
   styleUrl: './paciente-list.component.scss',
 })
 export class PacienteListComponent implements OnInit {
   pacientes: Paciente[] = [];
+  dataSource: MatTableDataSource<Paciente> = new MatTableDataSource();
   isLoading: boolean = false;
 
-  displayedColumns: string[] = ['id', 'nombre', 'cedula_identidad', 'actions'];
+  displayedColumns: string[] = ['id', 'nombre', 'actions'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private authService: AuthService,
@@ -50,11 +64,22 @@ export class PacienteListComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.pacienteService.getPacientes().subscribe((data: Paciente[]) => {
         this.pacientes = data;
+
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+
+        this.isLoading = false;
       });
     } else {
       this.router.navigate(['/logout']);
     }
-    this.isLoading = false;
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
   onEdit(paciente: Paciente): void {
@@ -65,5 +90,10 @@ export class PacienteListComponent implements OnInit {
   onDelete(paciente: Paciente): void {
     // Lógica para eliminar el paciente
     console.log('Eliminar', paciente);
+  }
+
+  onDetail(paciente: Paciente): void {
+    // Lógica para eliminar el paciente
+    console.log('Detail', paciente);
   }
 }
