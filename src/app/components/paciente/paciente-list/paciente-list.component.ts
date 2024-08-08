@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-paciente-list',
@@ -62,14 +63,24 @@ export class PacienteListComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     if (this.authService.isAuthenticated()) {
-      this.pacienteService.getPacientes().subscribe((data: Paciente[]) => {
-        this.pacientes = data;
-
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-
-        this.isLoading = false;
-      });
+      this.pacienteService
+        .getPacientes()
+        .pipe(
+          catchError((error) => {
+            if (error.status === 401) {
+              this.authService.logout();
+              this.router.navigate(['/login']);
+            }
+            this.isLoading = false;
+            return throwError(() => new Error('Error fetching pacientes'));
+          })
+        )
+        .subscribe((data: Paciente[]) => {
+          this.pacientes = data;
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.isLoading = false;
+        });
     } else {
       this.router.navigate(['/logout']);
     }

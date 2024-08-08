@@ -38,6 +38,6 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
+  { path: 'logout', component: LogoutComponent },
   { path: '**', component: NotFoundComponent },
 ];

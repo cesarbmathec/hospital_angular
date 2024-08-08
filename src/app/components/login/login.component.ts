@@ -23,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertComponent } from '../alert/alert.component';
 import { noWhitespaceValidator } from '../validators/validators';
 import { AuthService } from '../../services/auth.service';
+import { MatGridListModule, MatGridTile } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-login',
@@ -41,6 +42,8 @@ import { AuthService } from '../../services/auth.service';
     MatCardContent,
     ReactiveFormsModule,
     NgIf,
+    MatGridListModule,
+    MatGridTile,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

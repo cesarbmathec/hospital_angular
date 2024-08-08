@@ -24,11 +24,11 @@ export class AuthService {
     const refreshToken = localStorage.getItem('refreshToken');
     if (token) {
       this.token.access = token;
+      this.authenticated.next(true);
     }
     if (refreshToken) {
       this.token.refresh = refreshToken;
     }
-    this.authenticated.next(true);
   }
 
   getAccessToken(): string | null {
@@ -51,7 +51,13 @@ export class AuthService {
     }
     return this.http
       .post<any>(`${this.apiUrl}refresh`, { refresh: refreshToken })
-      .pipe(tap((tokens) => this.storeTokens(tokens)));
+      .pipe(
+        tap((tokens) => this.storeTokens(tokens)),
+        catchError((error) => {
+          this.logout();
+          return throwError(error);
+        })
+      );
   }
 
   logout(): void {
