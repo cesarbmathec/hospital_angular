@@ -80,7 +80,7 @@ export class PacienteAddComponent {
               class: 'alert success',
             },
           });
-          this.router.navigate(['/pacienteList']);
+          this.router.navigate(['/paciente/pacienteList']);
         },
         error: (err) => {
           this.isLoading = false;
