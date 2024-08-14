@@ -23,9 +23,3 @@ export class AuthGuard implements CanActivate {
     );
   }
 }
-
-/*
-    this.authService.isAuthenticated().subscribe((isAuthenticated) => {
-      this.authenticated = isAuthenticated;
-    });
-    */
