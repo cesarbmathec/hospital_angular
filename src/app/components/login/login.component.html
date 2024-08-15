@@ -1,12 +1,11 @@
 <div class="main-login">
   <div class="login-image"></div>
   <div class="login-container">
-    <div class="login-title" style="color: #ffffff">
-      <i class="fas fa-user-circle"></i> Login
-    </div>
+    <div class="login-title"><i class="fas fa-user-circle"></i> Login</div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill">
-        <mat-label><i class="fa-solid fa-user"></i> Usuario</mat-label>
+        <mat-label>Usuario</mat-label>
+        <mat-icon matPrefix>person</mat-icon>
         <input matInput formControlName="username" required />
         <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
           - Requerido
@@ -16,7 +15,8 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label><i class="fa-solid fa-lock"></i> Contraseña</mat-label>
+        <mat-label> Contraseña</mat-label>
+        <mat-icon matPrefix>lock</mat-icon>
         <input
           matInput
           [type]="hide() ? 'password' : 'text'"
@@ -44,7 +44,7 @@
         mat-flat-button
         color="primary"
         type="submit"
-        class="mat-flat-button"
+        class="mat-flat-button mat-elevation-z2"
       >
         <!--[disabled]="isLoading || !loginForm.valid" esto va en button-->
         <mat-icon>login</mat-icon>

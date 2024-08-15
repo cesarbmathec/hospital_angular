@@ -1,0 +1,8 @@
+<button mat-button class="mat-flat-button" (click)="executeRecaptcha()">
+  captcha
+</button>
+
+<re-captcha
+  (resolved)="executeRecaptchaVisible($event)"
+  siteKey="6LcD58oUAAAAABaYZabVIg0iQgLnOwUF5YLFgsTR"
+></re-captcha>
