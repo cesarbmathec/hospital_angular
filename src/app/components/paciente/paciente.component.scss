@@ -4,14 +4,28 @@
 
 mat-toolbar {
   margin: 0;
+  background-color: rgba($color: #e9e9e9, $alpha: 0.3);
 }
 
 .paciente-container {
-  padding: 0px 20px 20px 20px;
+  padding: 10px 20px 20px 20px;
   margin: 0;
 }
 
 .my-button {
-  border: 1px solid rgb(243, 243, 243) !important;
   margin-left: 5px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(185, 185, 185, 0.1) !important;
+}
+
+.my-button-add {
+  background-color: rgba($color: #94bbf5, $alpha: 0.1);
+  /*border: 1px solid rgba(128, 181, 250, 0.801) !important;*/
+  color: rgb(43, 106, 187) !important;
+}
+
+.my-button-list {
+  background-color: rgba($color: #5fdab1, $alpha: 0.1);
+  /*border: 1px solid rgba(49, 163, 153, 0.678) !important;*/
+  color: rgb(26, 141, 107) !important;
 }

@@ -24,6 +24,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     RouterModule,
     MatNavList,
     MatListItem,
+    MatTooltipModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

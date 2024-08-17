@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -13,6 +14,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     RouterModule,
+    MatTooltipModule,
   ],
   templateUrl: './paciente.component.html',
   styleUrl: './paciente.component.scss',
