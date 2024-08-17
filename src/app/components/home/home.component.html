@@ -1,6 +1,6 @@
 <mat-toolbar class="mat-toolbar-custom">
   <p>
-    <a mat-icon-button (click)="sidenav.toggle()" class="my-button">
+    <a mat-icon-button (click)="toggleSidenav()" class="my-button">
       <i class="fa-solid fa-bars"></i>
     </a>
   </p>
@@ -16,7 +16,7 @@
   <mat-sidenav
     #sidenav
     mode="side"
-    opened
+    [opened]="isSidenavExpanded"
     fixedInViewport="true"
     fixedBottomGap="0"
     fixedTopGap="0"

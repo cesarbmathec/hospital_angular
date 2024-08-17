@@ -8,10 +8,10 @@
         <mat-icon matPrefix>person</mat-icon>
         <input matInput formControlName="username" required />
         <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
-          - Requerido
+          - El nombre de usuario es requerido
         </mat-error>
         <mat-error *ngIf="loginForm.get('username')?.hasError('whitespace')">
-          - No puede contener solo espacios en blanco
+          - No puede contener sólo espacios en blanco
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
@@ -34,14 +34,14 @@
           <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-          - Requerida
+          - El password es requerido
         </mat-error>
         <mat-error *ngIf="loginForm.get('password')?.hasError('whitespace')">
-          - No puede contener solo espacios en blanco
+          - No puede contener sólo espacios en blanco
         </mat-error>
       </mat-form-field>
       <div class="captcha">
-        <app-captcha [formGroup]="loginForm"></app-captcha>
+        <app-captcha [formGroup]="loginForm">image</app-captcha>
       </div>
       <button
         mat-flat-button

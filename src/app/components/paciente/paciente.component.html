@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar [ngClass]="{ collapsed: !isSidenavExpanded }">
   <span>Paciente</span>
   <span class="mat-toolbar-spacer"></span>
   <button

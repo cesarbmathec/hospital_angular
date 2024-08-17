@@ -3,19 +3,41 @@
 }
 
 mat-toolbar {
-  margin: 0;
-  background-color: rgba($color: #e9e9e9, $alpha: 0.3);
+  background-color: rgba($color: #f8f8f8, $alpha: 1);
+  position: fixed;
+  top: 64px;
+  left: 200px;
+  z-index: 3;
+  border-bottom: 1px solid rgb(206, 206, 206);
+  width: calc(100% - 200px);
+  transition: left 0.3s, width 0.3s;
+
+  &.collapsed {
+    left: 0; /* Ancho cuando el sidenav está colapsado */
+    width: 100%;
+  }
+
+  @media (max-width: 720px) {
+    left: 50px;
+    width: calc(100% - 50px);
+
+    &.collapsed {
+      left: 0;
+      width: 100%;
+    }
+  }
 }
 
 .paciente-container {
-  padding: 10px 20px 20px 20px;
+  padding: 20px;
   margin: 0;
+  margin-top: 64px;
 }
 
 .my-button {
   margin-left: 5px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(185, 185, 185, 0.1) !important;
+  /*border: 1px solid rgba(185, 185, 185, 0.1) !important;*/
 }
 
 .my-button-add {

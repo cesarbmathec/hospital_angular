@@ -1,12 +1,9 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule, RouterOutlet } from '@angular/router';
 
@@ -19,7 +16,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     MatButtonModule,
     MatButtonModule,
     MatTooltipModule,
-    MatToolbar,
+    MatToolbarModule,
     NgIf,
     RouterModule,
     MatNavList,
@@ -31,4 +28,15 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 })
 export class HomeComponent {
   constructor() {}
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+  @Output() sidenavState = new EventEmitter<boolean>();
+
+  isSidenavExpanded = true;
+
+  toggleSidenav() {
+    this.isSidenavExpanded = !this.isSidenavExpanded;
+    this.sidenav.toggle();
+    this.sidenavState.emit(this.isSidenavExpanded);
+  }
 }
