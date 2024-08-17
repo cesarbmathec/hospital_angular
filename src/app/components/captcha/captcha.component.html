@@ -1,8 +1,12 @@
+<!--
 <button mat-button class="mat-flat-button" (click)="executeRecaptcha()">
   captcha
 </button>
-
+-->
 <re-captcha
   (resolved)="executeRecaptchaVisible($event)"
+  (errored)="errored($event)"
+  errorMode="handled"
   siteKey="6LcD58oUAAAAABaYZabVIg0iQgLnOwUF5YLFgsTR"
+  formControlName="recaptchaReactive"
 ></re-captcha>

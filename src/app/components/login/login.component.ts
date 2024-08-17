@@ -14,6 +14,7 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
 import { MatLabel } from '@angular/material/input';
 import { Router } from '@angular/router';
@@ -24,6 +25,8 @@ import { AlertComponent } from '../alert/alert.component';
 import { noWhitespaceValidator } from '../validators/validators';
 import { AuthService } from '../../services/auth.service';
 import { MatGridListModule, MatGridTile } from '@angular/material/grid-list';
+
+import { CaptchaComponent } from '../captcha/captcha.component';
 
 @Component({
   selector: 'app-login',
@@ -44,6 +47,7 @@ import { MatGridListModule, MatGridTile } from '@angular/material/grid-list';
     NgIf,
     MatGridListModule,
     MatGridTile,
+    CaptchaComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -58,9 +62,23 @@ export class LoginComponent {
     private router: Router,
     private _snackBar: MatSnackBar
   ) {
+    /*
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, noWhitespaceValidator]],
       password: ['', [Validators.required, noWhitespaceValidator]],
+      recaptchaReactive: ['', Validators.required],
+    });
+    */
+    this.loginForm = new FormGroup({
+      recaptchaReactive: new FormControl(null, Validators.required),
+      username: new FormControl(null, [
+        Validators.required,
+        noWhitespaceValidator,
+      ]),
+      password: new FormControl(null, [
+        Validators.required,
+        noWhitespaceValidator,
+      ]),
     });
   }
 

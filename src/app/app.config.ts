@@ -9,7 +9,12 @@ import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+import {
+  RECAPTCHA_SETTINGS,
+  RECAPTCHA_V3_SITE_KEY,
+  RecaptchaSettings,
+  RecaptchaV3Module,
+} from 'ng-recaptcha';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +32,12 @@ export const appConfig: ApplicationConfig = {
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: '6LdN1CcqAAAAAAQljhYj8tfqKxiESinpSwfNoDWv',
+    },
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: '<6LdN1CcqAAAAAAQljhYj8tfqKxiESinpSwfNoDWv>',
+      } as RecaptchaSettings,
     },
   ],
 };
