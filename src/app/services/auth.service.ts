@@ -17,7 +17,7 @@ export class AuthService {
   private token: Token = { access: '', refresh: '' };
   private authenticated = new BehaviorSubject<boolean>(false);
 
-  private apiUrl = 'http://127.0.0.1:8000/api/token/';
+  private apiUrl = 'http://192.168.0.101:8000/api/token/';
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('authToken');
@@ -68,10 +68,14 @@ export class AuthService {
 
   authenticate(username: string, password: string): Observable<void> {
     return this.http
-      .post<Token>(this.apiUrl, {
-        username,
-        password,
-      })
+      .post<Token>(
+        this.apiUrl,
+        {
+          username,
+          password,
+        },
+        { withCredentials: true }
+      )
       .pipe(
         map((response) => {
           this.token.access = response.access;
@@ -89,7 +93,8 @@ export class AuthService {
           return throwError(
             () =>
               new Error(
-                'Error en el inicio de sesión. Por favor, inténtelo de nuevo.'
+                'Error en el inicio de sesión. Por favor, inténtelo de nuevo.' +
+                  error.message
               )
           );
         })

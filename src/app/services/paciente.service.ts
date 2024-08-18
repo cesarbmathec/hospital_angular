@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class PacienteService {
-  private pacienteUrl = 'http://127.0.0.1:8000/historias_medicas/paciente/';
+  private pacienteUrl = 'http://192.168.0.101:8000/historias_medicas/paciente/';
   private token: Token = {
     access: '',
     refresh: '',
@@ -59,6 +59,37 @@ export class PacienteService {
           this.authService.logout();
         }
         return throwError(error);
+      })
+    );
+  }
+
+  public deletePaciente(id: number): Observable<boolean> {
+    this.token.access = this.authService.getAccessToken();
+
+    if (!this.token.access) {
+      return throwError('Token no disponible. Primero autentíquese.').pipe(
+        catchError((error) => {
+          this.authService.logout();
+          return new BehaviorSubject<boolean>(false).asObservable();
+        })
+      );
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token.access}`,
+    });
+
+    const url = `${this.pacienteUrl}${id}/`; // URL para eliminar un paciente específico
+
+    return this.http.delete<any>(url, { headers }).pipe(
+      map(() => true), // Si la eliminación es exitosa, retorna true
+      catchError((error) => {
+        // Maneja los errores y retorna false
+        if (error.status === 401) {
+          // Token expirado o inválido, redirigir al login
+          this.authService.logout();
+        }
+        return new BehaviorSubject<boolean>(false).asObservable();
       })
     );
   }

@@ -96,8 +96,35 @@ export class PacienteListComponent implements OnInit {
   }
 
   onDelete(paciente: Paciente): void {
-    // Lógica para eliminar el paciente
-    console.log('Eliminar', paciente);
+    const confirmDelete = confirm(
+      `¿Estás seguro de que deseas eliminar al paciente ${paciente.nombre} ${paciente.apellido}?`
+    );
+
+    if (confirmDelete) {
+      this.isLoading = true;
+
+      this.pacienteService.deletePaciente(paciente.id).subscribe({
+        next: (success) => {
+          if (success) {
+            this.pacientes = this.pacientes.filter((p) => p.id !== paciente.id);
+            this.dataSource.data = this.pacientes;
+            alert(
+              `Paciente ${paciente.nombre} ${paciente.apellido} eliminado exitosamente.`
+            );
+          } else {
+            alert('Error al eliminar el paciente. Inténtalo de nuevo.');
+          }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          alert(
+            'Ocurrió un error al eliminar el paciente. Inténtalo de nuevo.'
+          );
+          console.error('Error:', error);
+          this.isLoading = false;
+        },
+      });
+    }
   }
 
   onDetail(paciente: Paciente): void {

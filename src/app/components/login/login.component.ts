@@ -106,7 +106,8 @@ export class LoginComponent {
             duration: 7 * 1000,
             data: {
               message:
-                'Usuario o Password <strong>Incorrecto</strong>. Verifique los datos suministrados!!',
+                'Usuario o Password <strong>Incorrecto</strong>. Verifique los datos suministrados!!' +
+                err,
               class: 'alert danger',
             },
           });

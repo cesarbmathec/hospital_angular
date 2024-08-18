@@ -1,5 +1,5 @@
 .add-paciente-card {
-  max-width: 800px;
+  max-width: 90%;
   margin: 0px auto;
   border: 1px solid #dbdbdb;
 }
@@ -25,7 +25,7 @@
   min-width: 200px; // Ancho mínimo de cada campo para asegurar la responsividad
 }
 
-@media (max-width: 600px) {
+@media (max-width: 720px) {
   .form-field {
     flex: 1 1 100%; // En pantallas pequeñas, cada campo ocupa el 100% del ancho
   }
