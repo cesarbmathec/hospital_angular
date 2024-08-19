@@ -19,6 +19,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { catchError, throwError } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  AlertDialogComponent,
+  DialogData,
+} from '../../alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-paciente-list',
@@ -54,7 +59,8 @@ export class PacienteListComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private pacienteService: PacienteService
+    private pacienteService: PacienteService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -96,39 +102,80 @@ export class PacienteListComponent implements OnInit {
   }
 
   onDelete(paciente: Paciente): void {
-    const confirmDelete = confirm(
-      `¿Estás seguro de que deseas eliminar al paciente ${paciente.nombre} ${paciente.apellido}?`
-    );
+    const dialogData: DialogData = {
+      title: 'Eliminar Paciente',
+      message: `¿Estás seguro de que deseas eliminar al paciente ${paciente.nombre} ${paciente.apellido}?`,
+      type: 'danger',
+      typeButton: 'danger',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+    };
 
-    if (confirmDelete) {
-      this.isLoading = true;
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      width: '300px',
+      data: dialogData,
+    });
 
-      this.pacienteService.deletePaciente(paciente.id).subscribe({
-        next: (success) => {
-          if (success) {
-            this.pacientes = this.pacientes.filter((p) => p.id !== paciente.id);
-            this.dataSource.data = this.pacientes;
-            alert(
-              `Paciente ${paciente.nombre} ${paciente.apellido} eliminado exitosamente.`
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.isLoading = true;
+
+        this.pacienteService.deletePaciente(paciente.id).subscribe({
+          next: (success) => {
+            if (success) {
+              this.pacientes = this.pacientes.filter(
+                (p) => p.id !== paciente.id
+              );
+              this.dataSource.data = this.pacientes;
+              this.showDialog(
+                'Paciente eliminado',
+                `El paciente ${paciente.nombre} ${paciente.apellido} ha sido eliminado exitosamente.`,
+                'success'
+              );
+            } else {
+              this.showDialog(
+                'Error',
+                'Error al eliminar el paciente. Inténtalo de nuevo.',
+                'danger'
+              );
+            }
+            this.isLoading = false;
+          },
+          error: (error) => {
+            this.showDialog(
+              'Error',
+              'Ocurrió un error al eliminar el paciente. Inténtalo de nuevo.',
+              'danger'
             );
-          } else {
-            alert('Error al eliminar el paciente. Inténtalo de nuevo.');
-          }
-          this.isLoading = false;
-        },
-        error: (error) => {
-          alert(
-            'Ocurrió un error al eliminar el paciente. Inténtalo de nuevo.'
-          );
-          console.error('Error:', error);
-          this.isLoading = false;
-        },
-      });
-    }
+            console.error('Error:', error);
+            this.isLoading = false;
+          },
+        });
+      }
+    });
   }
 
   onDetail(paciente: Paciente): void {
     // Lógica para eliminar el paciente
     console.log('Detail', paciente);
+  }
+
+  showDialog(
+    title: string,
+    message: string,
+    type: 'success' | 'danger' | 'warning'
+  ) {
+    const dialogData: DialogData = {
+      title,
+      message,
+      type,
+      confirmButtonText: 'Ok',
+    };
+
+    this.dialog.open(AlertDialogComponent, {
+      width: '300px',
+      data: dialogData,
+    });
   }
 }

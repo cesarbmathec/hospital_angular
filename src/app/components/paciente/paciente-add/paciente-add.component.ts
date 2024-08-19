@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   MatCardContent,
   MatCardHeader,
@@ -21,7 +20,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { PacienteService } from '../../../services/paciente.service';
 import { noWhitespaceValidator } from '../../validators/validators';
-import { AlertComponent } from '../../alert/alert.component';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  AlertDialogComponent,
+  DialogData,
+} from '../../alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-paciente-add',
@@ -50,7 +53,7 @@ export class PacienteAddComponent {
     private fb: FormBuilder,
     private pacienteService: PacienteService,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private dialog: MatDialog
   ) {
     this.pacienteForm = this.fb.group({
       nombre: ['', [Validators.required, noWhitespaceValidator]],
@@ -71,31 +74,39 @@ export class PacienteAddComponent {
       this.pacienteService.addPaciente(paciente).subscribe({
         next: () => {
           this.isLoading = false;
-          this._snackBar.openFromComponent(AlertComponent, {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-            duration: 7 * 1000,
-            data: {
-              message: 'Paciente <strong>registrado</strong> correctamente!!',
-              class: 'alert success',
-            },
-          });
+          // Mensaje
+          this.showDialog(
+            'Paciente agregado',
+            'El paciente se ha agregado correctamente.',
+            'success'
+          );
           this.router.navigate(['/paciente/pacienteList']);
         },
         error: (err) => {
           this.isLoading = false;
-          this._snackBar.openFromComponent(AlertComponent, {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-            duration: 7 * 1000,
-            data: {
-              message: 'Error: <strong>No se registró</strong> el paciente!!',
-              class: 'alert danger',
-            },
-          });
+          // Mensaje
+          this.showDialog('Error', 'No se pudo agregar el paciente.', 'danger');
           console.error(err);
         },
       });
     }
+  }
+
+  showDialog(
+    title: string,
+    message: string,
+    type: 'success' | 'danger' | 'warning'
+  ) {
+    const dialogData: DialogData = {
+      title,
+      message,
+      type,
+      confirmButtonText: 'Ok',
+    };
+
+    this.dialog.open(AlertDialogComponent, {
+      width: '300px',
+      data: dialogData,
+    });
   }
 }

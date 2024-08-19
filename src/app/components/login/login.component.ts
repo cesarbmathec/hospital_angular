@@ -21,7 +21,6 @@ import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AlertComponent } from '../alert/alert.component';
 import { noWhitespaceValidator } from '../validators/validators';
 import { AuthService } from '../../services/auth.service';
 import { MatGridListModule, MatGridTile } from '@angular/material/grid-list';
@@ -100,17 +99,7 @@ export class LoginComponent {
         },
         error: (err: any) => {
           this.isLoading = false;
-          this._snackBar.openFromComponent(AlertComponent, {
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-            duration: 7 * 1000,
-            data: {
-              message:
-                'Usuario o Password <strong>Incorrecto</strong>. Verifique los datos suministrados!!' +
-                err,
-              class: 'alert danger',
-            },
-          });
+          // Mensaje
         },
       });
     }

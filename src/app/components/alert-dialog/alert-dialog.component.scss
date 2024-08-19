@@ -1,0 +1,24 @@
+.alert-dialog-content.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-dialog-content.danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-dialog-content.warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+mat-dialog-actions {
+  button {
+    border-radius: 4px !important;
+    margin-left: 8px;
+  }
+  button.danger {
+    color: red;
+  }
+}

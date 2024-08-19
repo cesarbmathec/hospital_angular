@@ -1,0 +1,18 @@
+<mat-dialog-content class="alert-dialog-content" [ngClass]="data.type">
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button *ngIf="data.showCancelButton" (click)="onCancel()">
+    {{ data.cancelButtonText || "No" }}
+  </button>
+  <button
+    [ngClass]="data.typeButton"
+    mat-button
+    (click)="onConfirm()"
+    color="primary"
+  >
+    {{ data.confirmButtonText || "Yes" }}
+  </button>
+</mat-dialog-actions>
