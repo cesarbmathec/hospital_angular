@@ -8,11 +8,20 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PacienteListComponent } from './components/paciente/paciente-list/paciente-list.component';
 import { PacienteAddComponent } from './components/paciente/paciente-add/paciente-add.component';
 import { PacienteComponent } from './components/paciente/paciente.component';
+import { LoginRegisterComponent } from './components/login-register/login-register.component';
 
 export const routes: Routes = [
   // Public Urls
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: 'auth',
+    component: LoginRegisterComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+    ],
+  },
   // Private Urls
   {
     path: '',

@@ -20,12 +20,16 @@ import { MatLabel } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { noWhitespaceValidator } from '../validators/validators';
 import { AuthService } from '../../services/auth.service';
 import { MatGridListModule, MatGridTile } from '@angular/material/grid-list';
 
 import { CaptchaComponent } from '../captcha/captcha.component';
+import {
+  AlertDialogComponent,
+  DialogData,
+} from '../alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -59,7 +63,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private dialog: MatDialog
   ) {
     /*
     this.loginForm = this.fb.group({
@@ -97,11 +101,33 @@ export class LoginComponent {
           this.isLoading = false;
           this.router.navigate(['/']);
         },
-        error: (err: any) => {
+        error: (_err: any) => {
           this.isLoading = false;
-          // Mensaje
+          this.showDialog(
+            'Datos Incorrectos',
+            'Usuario o Password incorrecto!!',
+            'danger'
+          );
         },
       });
     }
+  }
+
+  showDialog(
+    title: string,
+    message: string,
+    type: 'success' | 'danger' | 'warning'
+  ) {
+    const dialogData: DialogData = {
+      title,
+      message,
+      type,
+      confirmButtonText: 'Ok',
+    };
+
+    this.dialog.open(AlertDialogComponent, {
+      width: '300px',
+      data: dialogData,
+    });
   }
 }

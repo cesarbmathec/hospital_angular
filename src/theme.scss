@@ -1,61 +1,161 @@
 @use "sass:map";
 @use "@angular/material" as mat;
 
-$theme: mat.define-theme(
+@include mat.core();
+
+// Define a dark theme
+$dark-theme: mat.define-theme(
   (
     color: (
-      theme-type: light,
-      primary: mat.$cyan-palette,
+      theme-type: dark,
+      primary: mat.$azure-palette,
     ),
   )
 );
 
-@include mat.core();
-@include mat.color-variants-backwards-compatibility($theme);
+// Define a light theme
+$light-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+    ),
+  )
+);
 
-@mixin color($theme) {
-  .my-button {
-    padding: 6px;
-    font-size: 14pt;
+@mixin color($light-theme) {
+  $type: mat.get-theme-type($light-theme);
+  $is-dark-theme: $type == dark;
+  $exportBackgroundOpacity: if($is-dark-theme, 0.12, 0.06);
+
+  .mat-toolbar {
+    background: rgba(mat.get-theme-color($light-theme, primary, 50), 1);
+    border-color: mat.get-theme-color($light-theme, primary, 50);
+    color: mat.get-theme-color($light-theme, primary, 90);
+    .button-toolbar {
+      color: mat.get-theme-color($light-theme, primary, 90);
+      @include mat.button-theme($dark-theme);
+    }
+    .button-toolbar:hover {
+      background-color: rgba(
+        mat.get-theme-color($light-theme, primary, 60),
+        0.6
+      );
+      color: mat.get-theme-color($light-theme, primary, 100);
+    }
   }
-  a.my-button {
-    // Read the 50 hue from the primary color palette.
-    color: rgb(
-      219,
-      219,
-      255
-    ); // mat.get-theme-color($theme, surface-container-high);
-    background-color: rgb(0, 139, 128);
-    padding: 6px;
-    font-size: 14pt;
+  .mat-toolbar-2 {
+    color: mat.get-theme-color($light-theme, secondary, 20);
+    background: rgba(
+      mat.get-theme-color($light-theme, primary, 98),
+      1
+    ) !important;
+    border-bottom: 1px solid !important;
+    border-bottom-color: mat.get-theme-color(
+      $light-theme,
+      neutral,
+      70
+    ) !important;
+    box-shadow: none !important;
+    .button-toolbar {
+      color: mat.get-theme-color($light-theme, primary, 10);
+    }
   }
-  .botton-icon-warn {
-    color: rgb(209, 137, 3);
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.253);
-    background-color: rgb(253, 249, 234);
-  }
-  .botton-icon-danger {
-    color: #ba1a1a;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.253);
-    background-color: rgb(253, 234, 234);
-  }
-  .botton-icon-primary {
-    color: #067b9e;
-    background-color: rgb(225, 248, 248);
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.253);
-  }
-  .mat-toolbar-custom {
-    background: mat.get-theme-color($theme, primary);
+  .mat-sidenav {
+    background: rgba(mat.get-theme-color($light-theme, primary, 95), 1);
+    border-color: mat.get-theme-color($light-theme, primary, 80);
+    border: 1px solid;
+    border-color: mat.get-theme-color($light-theme, neutral, 70);
+    padding: 0;
   }
 }
 
 @mixin theme($theme) {
-  @if mat.theme-has($theme, color) {
-    @include color($theme);
+  @include color($theme);
+}
+
+html {
+  /*
+
+  // Apply the light theme only when the user prefers light themes.
+  @media (prefers-color-scheme: light) {
+    // Use the `-color` mixins to only apply color styles without reapplying the same
+    // typography and density styles.
+    @include theme($dark-theme);
+    @include mat.core-theme($dark-theme);
+    @include mat.all-component-themes($dark-theme);
+  }
+    */
+
+  @include theme($light-theme);
+  @include mat.core-theme($light-theme);
+  @include mat.all-component-themes($light-theme);
+}
+
+/*
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$my-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500);
+$my-warn: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$my-accent: mat.m2-define-palette(mat.$m2-orange-palette, 800, A100, A400);
+
+$my-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+  )
+);
+
+@mixin color($light-theme) {
+  $type: mat.get-theme-type($light-theme);
+  $is-dark-theme: $type == dark;
+  $exportBackgroundOpacity: if($is-dark-theme, 0.12, 0.06);
+
+  .mat-toolbar {
+    background: mat.get-theme-color($light-theme, primary, A200);
+    color: mat.get-theme-color($light-theme, primary, 50);
+    .button-toolbar {
+      color: mat.get-theme-color($light-theme, primary, 50);
+    }
+  }
+  .mat-toolbar-2 {
+    background: if($type == dark, rgb(94, 94, 94), #f2f2f8);
+    border-bottom: 1px solid !important;
+    border-bottom-color: if(
+      $type == dark,
+      rgb(78, 78, 78),
+      rgb(122, 122, 122)
+    ) !important;
+
+    .button-toolbar {
+      color: mat.get-theme-color($light-theme, primary, A800);
+    }
+  }
+  .mat-sidenav {
+    background: mat.get-theme-color($light-theme, primary, 50);
+    border: 1px solid;
+    border-color: if(
+      $type == dark,
+      rgb(78, 78, 78),
+      rgb(146, 146, 146)
+    ) !important;
+    padding: 0;
+    box-shadow: 2px 0px 5px rgba(99, 99, 99, 0.125);
   }
 }
-:root {
-  @include theme($theme);
-  @include mat.core-theme($theme);
-  @include mat.all-component-themes($theme);
+
+@mixin theme($theme) {
+  @include color($theme);
 }
+
+:root {
+  @include theme($my-theme);
+  @include mat.core-theme($my-theme);
+  @include mat.all-component-themes($my-theme);
+}
+*/

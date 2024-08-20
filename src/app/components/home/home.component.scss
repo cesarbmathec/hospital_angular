@@ -1,6 +1,6 @@
 mat-sidenav-container {
   position: absolute;
-  top: 60px;
+  top: 55px !important;
   left: 0;
   right: 0;
   z-index: 1;
@@ -11,10 +11,10 @@ mat-sidenav {
   align-items: center;
   justify-content: center;
   width: 200px;
-  background-color: rgb(233, 233, 233);
-  padding-top: 56px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.255);
-  border-right: 1px solid rgb(189, 189, 189);
+  /*background-color: rgb(233, 233, 233);*/
+  padding-top: 55px !important;
+  /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.255);*/
+  /*border-right: 1px solid rgb(189, 189, 189);*/
   border-radius: 0px !important;
 
   transition: width 0.3s ease;
@@ -32,19 +32,13 @@ mat-sidenav-content {
   flex: 1 1 auto;
 }
 
-.my-button {
-  font-size: 12pt;
-  padding: 6px;
-  margin-left: 5px;
-}
-
 mat-toolbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 2;
-  height: 64px;
+  height: 65px;
 }
 
 .menu-item {

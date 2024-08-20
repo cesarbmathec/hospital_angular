@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-logout',
   standalone: true,
   imports: [],
-  templateUrl: './logout.component.html',
+  template: `< />`,
 })
 export class LogoutComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
@@ -17,6 +17,6 @@ export class LogoutComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 }

@@ -93,4 +93,33 @@ export class PacienteService {
       })
     );
   }
+
+  public updatePaciente(paciente: Paciente): Observable<boolean> {
+    this.token.access = this.authService.getAccessToken();
+
+    if (!this.token.access) {
+      return throwError('Token no disponible. Primero autentíquese.').pipe(
+        catchError((error) => {
+          this.authService.logout();
+          return new BehaviorSubject<boolean>(false).asObservable();
+        })
+      );
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token.access}`,
+    });
+
+    const url = `${this.pacienteUrl}${paciente.id}/`;
+
+    return this.http.put<any>(url, paciente, { headers }).pipe(
+      map(() => true),
+      catchError((error) => {
+        if (error.status === 401) {
+          this.authService.logout();
+        }
+        return new BehaviorSubject<boolean>(false).asObservable();
+      })
+    );
+  }
 }

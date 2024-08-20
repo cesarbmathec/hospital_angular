@@ -72,7 +72,7 @@ export class PacienteListComponent implements OnInit {
           catchError((error) => {
             if (error.status === 401) {
               this.authService.logout();
-              this.router.navigate(['/login']);
+              this.router.navigate(['/auth/login']);
             }
             this.isLoading = false;
             return throwError(() => new Error('Error fetching pacientes'));

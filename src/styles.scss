@@ -10,8 +10,17 @@ body {
 body {
   margin: 0;
   padding: 0;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
-.mat-flat-button {
-  border-radius: 4px !important;
+a.my-button {
+  font-size: 14pt;
+  padding: 8px !important;
+  margin-left: 4px;
+}
+
+button.my-button {
+  font-size: 14pt;
+  padding-top: 6px !important;
+  margin-left: 4px;
 }

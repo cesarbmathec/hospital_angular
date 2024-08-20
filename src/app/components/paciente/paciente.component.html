@@ -1,23 +1,28 @@
-<mat-toolbar [ngClass]="{ collapsed: !isSidenavExpanded }">
+<mat-toolbar
+  class="mat-toolbar-2"
+  [ngClass]="{ collapsed: !isSidenavExpanded }"
+>
   <span>Paciente</span>
   <span class="mat-toolbar-spacer"></span>
   <button
     matTooltip="Lista de Pacientes"
     mat-icon-button
-    class="my-button my-button-list"
+    color=""
+    class="my-button"
     aria-label="Example icon-button with heart icon"
     routerLink="pacienteList"
   >
-    <mat-icon>list</mat-icon>
+    <i class="fa-solid fa-list"></i>
   </button>
   <button
+    color=""
     matTooltip="Agregar un nuevo paciente"
     mat-icon-button
-    class="my-button my-button-add"
+    class="my-button"
     aria-label="Example icon-button with share icon"
     routerLink="pacienteAdd"
   >
-    <mat-icon>add</mat-icon>
+    <i class="fa-solid fa-plus"></i>
   </button>
 </mat-toolbar>
 <div class="paciente-container">
