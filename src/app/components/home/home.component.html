@@ -2,6 +2,7 @@
   <p>
     <a
       mat-icon-button
+      matTooltip="Contraer/Expandir Menú"
       class="my-button button-toolbar"
       (click)="toggleSidenav()"
     >
@@ -10,7 +11,12 @@
   </p>
   <span class="toolbar-spacer"></span>
   <nav>
-    <a mat-icon-button class="my-button button-toolbar" routerLink="/logout">
+    <a
+      matTooltip="Cerrar Sesión"
+      mat-icon-button
+      class="my-button button-toolbar"
+      routerLink="/logout"
+    >
       <i class="fa-solid fa-right-from-bracket"></i>
     </a>
   </nav>
@@ -37,7 +43,7 @@
       <a
         mat-list-item
         class="menu-item"
-        routerLink=""
+        routerLink="historia_clinica"
         matTooltip="Historias Clínicas"
         ><i class="fas fa-list icon-item"></i> Historias Clínicas</a
       >

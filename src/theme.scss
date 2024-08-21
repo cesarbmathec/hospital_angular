@@ -108,7 +108,10 @@ $light-theme: mat.define-theme(
     text-align: center;
   }
   .mat-dialog-content {
-    overflow-y: auto;
+    overflow-y: auto !important;
+  }
+  h1 {
+    color: rgba(mat.get-theme-color($light-theme, primary, 40), 1) !important;
   }
 }
 

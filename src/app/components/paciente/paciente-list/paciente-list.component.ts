@@ -26,6 +26,7 @@ import {
 } from '../../alert-dialog/alert-dialog.component';
 import { PacienteAddComponent } from '../paciente-add/paciente-add.component';
 import { PacienteDetailComponent } from '../paciente-detail/paciente-detail.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-paciente-list',
@@ -45,6 +46,7 @@ import { PacienteDetailComponent } from '../paciente-detail/paciente-detail.comp
     MatInputModule,
     MatIconModule,
     MatPaginatorModule,
+    MatTooltipModule,
   ],
   templateUrl: './paciente-list.component.html',
   styleUrl: './paciente-list.component.scss',

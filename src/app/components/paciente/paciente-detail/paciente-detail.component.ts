@@ -7,11 +7,12 @@ import {
 import { Paciente } from '../../../interfaces/paciente';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-paciente-detail',
   standalone: true,
-  imports: [MatCardModule, MatDialogModule, MatButtonModule],
+  imports: [MatCardModule, MatDialogModule, MatButtonModule, MatDividerModule],
   templateUrl: './paciente-detail.component.html',
   styleUrl: './paciente-detail.component.scss',
 })

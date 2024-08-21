@@ -9,6 +9,7 @@ import { PacienteListComponent } from './components/paciente/paciente-list/pacie
 import { PacienteAddComponent } from './components/paciente/paciente-add/paciente-add.component';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
+import { HistoriaClinicaComponent } from './components/historia-clinica/historia-clinica.component';
 
 export const routes: Routes = [
   // Public Urls
@@ -49,6 +50,11 @@ export const routes: Routes = [
             canActivate: [AuthGuard],
           },
         ],
+      },
+      {
+        path: 'historia_clinica',
+        component: HistoriaClinicaComponent,
+        canActivate: [AuthGuard],
       },
     ],
   },

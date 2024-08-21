@@ -3,7 +3,7 @@
 <mat-card class="paciente-list-card">
   <mat-card-header class="paciente-list-card-header">
     <mat-card-title>
-      <i class="fa-solid fa-user-circle"></i>
+      <i class="fa-solid fa-users"></i>
       Listado de Pacientes
     </mat-card-title>
   </mat-card-header>
@@ -22,7 +22,9 @@
           <th mat-header-cell *matHeaderCellDef class="custom-header-cell">
             No.
           </th>
-          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          <td mat-cell *matCellDef="let element; let i = index">
+            {{ i + 1 + paginator.pageIndex * paginator.pageSize }}
+          </td>
         </ng-container>
 
         <!-- Name Column -->
@@ -50,12 +52,14 @@
             <button
               color="primary"
               class="my-button"
+              matTooltip="Editar datos del Paciente"
               mat-icon-button
               (click)="onEdit(element)"
             >
               <i class="fa fa-edit"></i>
             </button>
             <button
+              matTooltip="Eliminar Paciente"
               color="warn"
               class="my-button botton-icon-danger"
               mat-icon-button
@@ -64,7 +68,8 @@
               <i class="fa fa-trash"></i>
             </button>
             <button
-              color=""
+              color="accent"
+              matTooltip="Detalles del Paciente"
               class="my-button botton-icon-primary"
               mat-icon-button
               (click)="onDetail(element)"
