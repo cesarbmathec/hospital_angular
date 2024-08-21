@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-content>
+    <h1 mat-dialog-title>Detalle del Paciente</h1>
+    <div mat-dialog-content>
+      <p><strong>ID:</strong> {{ data.id }}</p>
+      <p><strong>Nombre:</strong> {{ data.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ data.apellido }}</p>
+      <p><strong>Cédula de Identidad:</strong> {{ data.cedula_identidad }}</p>
+      <p><strong>Nro. Teléfono:</strong> {{ data.telefono }}</p>
+      <p><strong>Email:</strong> {{ data.correo_electronico }}</p>
+      <p><strong>Dirección:</strong> {{ data.direccion }}</p>
+      <p>
+        <strong>Género:</strong>
+        {{ data.genero == "F" ? "Femenino" : "Masculino" }}
+      </p>
+      <!-- Agrega aquí más campos según sea necesario -->
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cerrar</button>
+    </div>
+  </mat-card-content>
+</mat-card>

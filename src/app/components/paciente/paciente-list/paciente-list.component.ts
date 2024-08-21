@@ -24,6 +24,8 @@ import {
   AlertDialogComponent,
   DialogData,
 } from '../../alert-dialog/alert-dialog.component';
+import { PacienteAddComponent } from '../paciente-add/paciente-add.component';
+import { PacienteDetailComponent } from '../paciente-detail/paciente-detail.component';
 
 @Component({
   selector: 'app-paciente-list',
@@ -98,7 +100,7 @@ export class PacienteListComponent implements OnInit {
 
   onEdit(paciente: Paciente): void {
     // Lógica para editar el paciente
-    console.log('Editar', paciente);
+    this.router.navigate([`/paciente/pacienteAdd/`, paciente.id]);
   }
 
   onDelete(paciente: Paciente): void {
@@ -157,8 +159,10 @@ export class PacienteListComponent implements OnInit {
   }
 
   onDetail(paciente: Paciente): void {
-    // Lógica para eliminar el paciente
-    console.log('Detail', paciente);
+    this.dialog.open(PacienteDetailComponent, {
+      width: '400px', // Puedes ajustar el tamaño del diálogo
+      data: paciente, // Pasa los datos del paciente al componente de detalle
+    });
   }
 
   showDialog(

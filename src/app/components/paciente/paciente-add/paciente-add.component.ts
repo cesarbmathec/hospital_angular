@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatCardContent,
   MatCardHeader,
@@ -20,11 +20,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { PacienteService } from '../../../services/paciente.service';
 import { noWhitespaceValidator } from '../../validators/validators';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogContent } from '@angular/material/dialog';
 import {
   AlertDialogComponent,
   DialogData,
 } from '../../alert-dialog/alert-dialog.component';
+import { Paciente } from '../../../interfaces/paciente';
 
 @Component({
   selector: 'app-paciente-add',
@@ -41,11 +42,16 @@ import {
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
+    MatDialogContent,
   ],
   templateUrl: './paciente-add.component.html',
   styleUrl: './paciente-add.component.scss',
 })
 export class PacienteAddComponent {
+  pacienteId!: number;
+  isEditMode: boolean = false;
+  paciente!: Paciente;
+
   pacienteForm: FormGroup;
   isLoading = false;
 
@@ -53,6 +59,7 @@ export class PacienteAddComponent {
     private fb: FormBuilder,
     private pacienteService: PacienteService,
     private router: Router,
+    private route: ActivatedRoute,
     private dialog: MatDialog
   ) {
     this.pacienteForm = this.fb.group({
@@ -67,28 +74,62 @@ export class PacienteAddComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
+        this.pacienteId = +id;
+        this.isEditMode = true;
+        this.loadPacienteData(this.pacienteId);
+      }
+    });
+  }
+
   onSubmit(): void {
     if (this.pacienteForm.valid) {
-      this.isLoading = true;
-      const paciente = this.pacienteForm.value;
-      this.pacienteService.addPaciente(paciente).subscribe({
-        next: () => {
-          this.isLoading = false;
-          // Mensaje
-          this.showDialog(
-            'Paciente agregado',
-            'El paciente se ha agregado correctamente.',
-            'success'
-          );
-          this.router.navigate(['/paciente/pacienteList']);
-        },
-        error: (err) => {
-          this.isLoading = false;
-          // Mensaje
-          this.showDialog('Error', 'No se pudo agregar el paciente.', 'danger');
-          console.error(err);
-        },
-      });
+      if (this.isEditMode) {
+        this.paciente = { id: this.pacienteId, ...this.pacienteForm.value };
+        this.pacienteService.updatePaciente(this.paciente).subscribe({
+          next: () => {
+            this.showDialog(
+              'Editado Correctamente',
+              `El paciente ${this.pacienteForm.value.nombre}, ${this.pacienteForm.value.apellido} ha sido editado correctamente.`,
+              'success'
+            );
+            this.router.navigate(['/paciente/pacienteList']);
+          },
+          error: (error) => {
+            this.showDialog('Error', 'Error al editar los datos.', 'danger');
+            this.router.navigate(['/paciente/pacienteList']);
+          },
+        });
+      } else {
+        // Agregar paciente
+        this.isLoading = true;
+        const paciente = this.pacienteForm.value;
+        this.pacienteService.addPaciente(paciente).subscribe({
+          next: () => {
+            this.isLoading = false;
+            // Mensaje
+            this.showDialog(
+              'Paciente agregado',
+              'El paciente se ha agregado correctamente.',
+              'success'
+            );
+            this.router.navigate(['/paciente/pacienteList']);
+          },
+          error: (err) => {
+            this.isLoading = false;
+            // Mensaje
+            this.showDialog(
+              'Error',
+              'No se pudo agregar el paciente.',
+              'danger'
+            );
+            console.error(err);
+          },
+        });
+      }
     }
   }
 
@@ -107,6 +148,17 @@ export class PacienteAddComponent {
     this.dialog.open(AlertDialogComponent, {
       width: '300px',
       data: dialogData,
+    });
+  }
+
+  loadPacienteData(id: number): void {
+    this.pacienteService.getPacienteById(id).subscribe({
+      next: (paciente: Paciente) => {
+        this.pacienteForm.patchValue(paciente);
+      },
+      error: (error) => {
+        console.error('Error loading paciente:', error);
+      },
     });
   }
 }

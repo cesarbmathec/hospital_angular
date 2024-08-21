@@ -1,7 +1,8 @@
 <!-- add-paciente.component.html -->
 <mat-card class="add-paciente-card">
   <mat-card-header class="add-paciente-card-header">
-    <mat-card-title>Agregar Paciente</mat-card-title>
+    <mat-card-title *ngIf="isEditMode">Editar</mat-card-title>
+    <mat-card-title *ngIf="!isEditMode">Agregar</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form
@@ -102,12 +103,10 @@
       </div>
       <button
         mat-flat-button
-        class="mat-flat-button"
-        color="primary"
         type="submit"
         [disabled]="isLoading || !pacienteForm.valid"
       >
-        Agregar Paciente
+        {{ isEditMode ? "Editar Paciente" : "Agregar Paciente" }}
       </button>
       <mat-progress-bar
         *ngIf="isLoading"

@@ -122,4 +122,23 @@ export class PacienteService {
       })
     );
   }
+
+  public getPacienteById(id: number): Observable<Paciente> {
+    this.token.access = this.authService.getAccessToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token.access}`,
+    });
+
+    const url = `${this.pacienteUrl}${id}/`; // URL para obtener un paciente específico
+
+    return this.http.get<Paciente>(url, { headers }).pipe(
+      catchError((error) => {
+        if (error.status === 401) {
+          this.authService.logout();
+        }
+        return throwError(error);
+      })
+    );
+  }
 }

@@ -1,22 +1,6 @@
 .table {
   border-color: 1px solid rgb(218, 218, 218);
 }
-.mat-column-id {
-  width: 32px;
-  border-right: 1px solid rgb(218, 218, 218);
-  padding-right: 24px;
-  text-align: center;
-}
-
-.mat-mdc-row .mat-mdc-cell {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  cursor: pointer;
-}
-
-.mat-mdc-row:hover .mat-mdc-cell {
-  background-color: rgba($color: #05583d, $alpha: 0.05);
-}
 
 .paciente-list-card {
   border: 1px solid #dbdbdb;
@@ -28,23 +12,7 @@
   /*justify-content: space-between;*/
 }
 
-.table-container {
-  overflow-x: auto;
-  border: 1px solid rgb(218, 218, 218);
-  border-radius: 8px;
-}
-
 mat-form-field {
   width: 100%;
   margin-top: 5px;
-}
-
-.custom-header-cell {
-  padding: 8px;
-  font-weight: bold;
-  border-bottom: 1px solid #e0e0e0; /* Borde inferior personalizado */
-}
-
-.custom-header-row {
-  background-color: #f8f8f8;
 }

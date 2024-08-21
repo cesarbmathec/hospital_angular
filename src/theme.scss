@@ -8,7 +8,7 @@ $dark-theme: mat.define-theme(
   (
     color: (
       theme-type: dark,
-      primary: mat.$azure-palette,
+      primary: mat.$orange-palette,
     ),
   )
 );
@@ -18,7 +18,7 @@ $light-theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: mat.$azure-palette,
+      primary: mat.$orange-palette,
     ),
   )
 );
@@ -33,7 +33,7 @@ $light-theme: mat.define-theme(
     border-color: mat.get-theme-color($light-theme, primary, 50);
     color: mat.get-theme-color($light-theme, primary, 90);
     .button-toolbar {
-      color: mat.get-theme-color($light-theme, primary, 90);
+      color: mat.get-theme-color($light-theme, primary, 80);
       @include mat.button-theme($dark-theme);
     }
     .button-toolbar:hover {
@@ -41,13 +41,13 @@ $light-theme: mat.define-theme(
         mat.get-theme-color($light-theme, primary, 60),
         0.6
       );
-      color: mat.get-theme-color($light-theme, primary, 100);
+      color: mat.get-theme-color($light-theme, primary, 90);
     }
   }
   .mat-toolbar-2 {
     color: mat.get-theme-color($light-theme, secondary, 20);
     background: rgba(
-      mat.get-theme-color($light-theme, primary, 98),
+      mat.get-theme-color($light-theme, primary, 95),
       1
     ) !important;
     border-bottom: 1px solid !important;
@@ -67,6 +67,48 @@ $light-theme: mat.define-theme(
     border: 1px solid;
     border-color: mat.get-theme-color($light-theme, neutral, 70);
     padding: 0;
+  }
+  // Style table
+  .table-container {
+    border: 1px solid rgba(mat.get-theme-color($light-theme, neutral, 80), 1);
+    border-radius: 8px;
+    overflow-x: auto !important;
+  }
+  .custom-header-cell {
+    padding: 8px;
+    font-weight: bold;
+    border-bottom: 1px solid
+      rgba(mat.get-theme-color($light-theme, neutral, 80), 1);
+  }
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  // hover
+  .mat-mdc-row:hover .mat-mdc-cell {
+    background-color: rgba(
+      mat.get-theme-color($light-theme, neutral, 80),
+      0.15
+    );
+  }
+  // header
+  .custom-header-row {
+    background-color: rgba(
+      mat.get-theme-color($light-theme, neutral-variant, 80),
+      0.25
+    );
+  }
+  // Columna ID
+  .mat-column-id {
+    width: 32px;
+    border-right: 1px solid
+      rgba(mat.get-theme-color($light-theme, neutral, 80), 1);
+    padding-right: 24px;
+    text-align: center;
+  }
+  .mat-dialog-content {
+    overflow-y: auto;
   }
 }
 
