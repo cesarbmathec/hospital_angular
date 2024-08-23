@@ -1,6 +1,16 @@
 <mat-card>
   <mat-card-content>
-    <h1 mat-dialog-title class="mat-dialog-title">Detalle del Paciente</h1>
+    <div class="header-container">
+      <h1 mat-dialog-title class="mat-dialog-title">Detalle del Paciente</h1>
+      <button
+        mat-icon-button
+        mat-dialog-close
+        class="close-button my-button"
+        aria-label="Close"
+      >
+        <i class="fa-solid fa-close"></i>
+      </button>
+    </div>
     <mat-divider></mat-divider>
     <div mat-dialog-content>
       <p><strong>Nombre:</strong> {{ data.nombre }}</p>
@@ -15,7 +25,11 @@
       </p>
     </div>
     <div mat-dialog-actions>
-      <button mat-button mat-dialog-close>Cerrar</button>
+      <button mat-flat-button class="mat-elevation-z2">
+        <!--[disabled]="isLoading || !loginForm.valid" esto va en button-->
+        <i class="fa-solid fa-plus"></i>
+        Consulta
+      </button>
     </div>
   </mat-card-content>
 </mat-card>

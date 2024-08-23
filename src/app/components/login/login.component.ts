@@ -60,18 +60,10 @@ export class LoginComponent {
   isLoading = false;
 
   constructor(
-    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog
   ) {
-    /*
-    this.loginForm = this.fb.group({
-      username: ['', [Validators.required, noWhitespaceValidator]],
-      password: ['', [Validators.required, noWhitespaceValidator]],
-      recaptchaReactive: ['', Validators.required],
-    });
-    */
     this.loginForm = new FormGroup({
       recaptchaReactive: new FormControl(null, Validators.required),
       username: new FormControl(null, [

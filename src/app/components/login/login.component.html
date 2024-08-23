@@ -56,7 +56,7 @@
             color="primary"
             type="submit"
             class="mat-flat-button mat-elevation-z2"
-            [disabled]="loginForm.invalid"
+            [disabled]="isLoading || loginForm.invalid"
           >
             <!--[disabled]="isLoading || !loginForm.valid" esto va en button-->
             <mat-icon>login</mat-icon>
