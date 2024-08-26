@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class PacienteService {
-  private pacienteUrl = 'http://192.168.0.105:8000/historias_medicas/paciente/';
+  private pacienteUrl = 'http://192.168.0.102:8000/historias_medicas/paciente/';
   private token: Token = {
     access: '',
     refresh: '',
