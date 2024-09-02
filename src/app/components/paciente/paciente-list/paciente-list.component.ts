@@ -11,7 +11,7 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { Paciente } from '../../../interfaces/paciente';
+import { Paciente } from '../../../interfaces/Paciente';
 import { AuthService } from '../../../services/auth.service';
 import { PacienteService } from '../../../services/paciente.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,9 +24,9 @@ import {
   AlertDialogComponent,
   DialogData,
 } from '../../alert-dialog/alert-dialog.component';
-import { PacienteAddComponent } from '../paciente-add/paciente-add.component';
 import { PacienteDetailComponent } from '../paciente-detail/paciente-detail.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PacienteAddComponent } from '../paciente-add/paciente-add.component';
 
 @Component({
   selector: 'app-paciente-list',
@@ -70,24 +70,15 @@ export class PacienteListComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     if (this.authService.isAuthenticated()) {
-      this.pacienteService
-        .getPacientes()
-        .pipe(
-          catchError((error) => {
-            if (error.status === 401) {
-              this.authService.logout();
-              this.router.navigate(['/auth/login']);
-            }
-            this.isLoading = false;
-            return throwError(() => new Error('Error fetching pacientes'));
-          })
-        )
-        .subscribe((data: Paciente[]) => {
-          this.pacientes = data;
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.isLoading = false;
-        });
+      this.pacienteService.pacientes$.subscribe((data: Paciente[]) => {
+        this.pacientes = data;
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+        this.isLoading = false;
+      });
+
+      // Cargar pacientes inicialmente
+      this.pacienteService.getPacientes().subscribe();
     } else {
       this.router.navigate(['/logout']);
     }
@@ -101,8 +92,10 @@ export class PacienteListComponent implements OnInit {
   }
 
   onEdit(paciente: Paciente): void {
-    // Lógica para editar el paciente
-    this.router.navigate([`/paciente/pacienteAdd/`, paciente.id]);
+    this.dialog.open(PacienteAddComponent, {
+      maxHeight: '90vh',
+      data: paciente.id,
+    });
   }
 
   onDelete(paciente: Paciente): void {
@@ -162,7 +155,6 @@ export class PacienteListComponent implements OnInit {
 
   onDetail(paciente: Paciente): void {
     this.dialog.open(PacienteDetailComponent, {
-      width: '400px', // Puedes ajustar el tamaño del diálogo
       data: paciente, // Pasa los datos del paciente al componente de detalle
     });
   }

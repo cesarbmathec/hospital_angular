@@ -110,7 +110,8 @@ $light-theme: mat.define-theme(
   .mat-dialog-content {
     overflow-y: auto !important;
   }
-  h1 {
+  h1,
+  h3 {
     color: rgba(mat.get-theme-color($light-theme, primary, 40), 1) !important;
   }
 }

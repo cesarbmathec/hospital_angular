@@ -1,4 +1,15 @@
-.paciente-form {
+.add-consulta-card {
+  max-width: 90%;
+  margin: 0px auto;
+  border: 1px solid #dbdbdb;
+  min-height: 100%;
+}
+
+.add-consulta-card-header {
+  margin-bottom: 25px;
+}
+
+.consulta-form {
   display: flex;
   flex-direction: column;
 }
@@ -13,14 +24,4 @@
 .form-field {
   flex: 1 1 calc(50% - 16px); // Tamaño de cada campo, ocupando el 50% del contenedor menos el espacio entre los campos
   min-width: 200px; // Ancho mínimo de cada campo para asegurar la responsividad
-}
-
-.mat-spacer {
-  flex: 1 1 auto;
-}
-
-@media (max-width: 720px) {
-  .form-field {
-    flex: 1 1 100%; // En pantallas pequeñas, cada campo ocupa el 100% del ancho
-  }
 }

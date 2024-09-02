@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <div class="header-container">
-      <h1 mat-dialog-title class="mat-dialog-title">Detalle del Paciente</h1>
+      <h1 mat-dialog-title>Detalle del Paciente</h1>
       <button
         mat-icon-button
         mat-dialog-close
@@ -19,6 +19,7 @@
       <p><strong>Nro. Teléfono:</strong> {{ data.telefono }}</p>
       <p><strong>Email:</strong> {{ data.correo_electronico }}</p>
       <p><strong>Dirección:</strong> {{ data.direccion }}</p>
+      <p><strong>Fecha de N.:</strong> {{ data.fecha_nacimiento }}</p>
       <p>
         <strong>Género:</strong>
         {{ data.genero == "F" ? "Femenino" : "Masculino" }}

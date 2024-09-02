@@ -9,6 +9,7 @@ import {
   throwError,
 } from 'rxjs';
 import { Token } from '../interfaces/Token';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class AuthService {
   private token: Token = { access: '', refresh: '' };
   private authenticated = new BehaviorSubject<boolean>(false);
 
-  private apiUrl = 'http://192.168.0.102:8000/api/token/';
+  private apiUrl = environment.authUrl;
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('authToken');

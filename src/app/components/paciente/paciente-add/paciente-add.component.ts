@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  MatCardActions,
   MatCardContent,
   MatCardHeader,
   MatCardModule,
@@ -25,11 +26,20 @@ import {
   AlertDialogComponent,
   DialogData,
 } from '../../alert-dialog/alert-dialog.component';
-import { Paciente } from '../../../interfaces/paciente';
+import { Paciente } from '../../../interfaces/Paciente';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+
+import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-paciente-add',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     MatCardModule,
     MatFormFieldModule,
@@ -43,11 +53,15 @@ import { Paciente } from '../../../interfaces/paciente';
     MatCardHeader,
     MatCardTitle,
     MatDialogContent,
+    MatCardActions,
+    MatDatepickerModule,
+    MatDividerModule,
+    MatIconModule,
   ],
   templateUrl: './paciente-add.component.html',
   styleUrl: './paciente-add.component.scss',
 })
-export class PacienteAddComponent {
+export class PacienteAddComponent implements OnInit {
   pacienteId!: number;
   isEditMode: boolean = false;
   paciente!: Paciente;
@@ -60,7 +74,9 @@ export class PacienteAddComponent {
     private pacienteService: PacienteService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dialogRef?: MatDialogRef<PacienteAddComponent>,
+    @Inject(MAT_DIALOG_DATA) public data?: number // Inyecta el ID del paciente
   ) {
     this.pacienteForm = this.fb.group({
       nombre: ['', [Validators.required, noWhitespaceValidator]],
@@ -72,18 +88,16 @@ export class PacienteAddComponent {
       correo_electronico: ['', [Validators.email]],
       cedula_identidad: ['', [Validators.required, noWhitespaceValidator]],
     });
+
+    // Si data tiene un ID, se establece el modo de edición
+    if (this.data) {
+      this.pacienteId = this.data;
+      this.isEditMode = true;
+      this.loadPacienteData(this.pacienteId); // Cargar datos del paciente
+    }
   }
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if (id) {
-        this.pacienteId = +id;
-        this.isEditMode = true;
-        this.loadPacienteData(this.pacienteId);
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.pacienteForm.valid) {
@@ -96,16 +110,20 @@ export class PacienteAddComponent {
               `El paciente ${this.pacienteForm.value.nombre}, ${this.pacienteForm.value.apellido} ha sido editado correctamente.`,
               'success'
             );
-            this.router.navigate(['/paciente/pacienteList']);
+            this.closeDialog();
+            // this.router.navigate(['/paciente/pacienteList']);
           },
           error: (error) => {
             this.showDialog('Error', 'Error al editar los datos.', 'danger');
-            this.router.navigate(['/paciente/pacienteList']);
+            //this.router.navigate(['/paciente/pacienteList']);
           },
         });
       } else {
         // Agregar paciente
         this.isLoading = true;
+        this.pacienteForm.value.fecha_nacimiento = this.formatDate(
+          this.pacienteForm.value.fecha_nacimiento
+        );
         const paciente = this.pacienteForm.value;
         this.pacienteService.addPaciente(paciente).subscribe({
           next: () => {
@@ -116,7 +134,8 @@ export class PacienteAddComponent {
               'El paciente se ha agregado correctamente.',
               'success'
             );
-            this.router.navigate(['/paciente/pacienteList']);
+            this.closeDialog();
+            //this.router.navigate(['/paciente/pacienteList']);
           },
           error: (err) => {
             this.isLoading = false;
@@ -155,10 +174,28 @@ export class PacienteAddComponent {
     this.pacienteService.getPacienteById(id).subscribe({
       next: (paciente: Paciente) => {
         this.pacienteForm.patchValue(paciente);
+        this.paciente = paciente; // Guarda el paciente cargado
       },
       error: (error) => {
         console.error('Error loading paciente:', error);
       },
     });
+  }
+
+  // Método para cerrar el diálogo
+  closeDialog(): void {
+    this.dialogRef?.close();
+  }
+
+  formatDate(date: Date): string {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 }

@@ -1,21 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Paciente } from '../interfaces/paciente';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Paciente } from '../interfaces/Paciente';
 import { Token } from '../interfaces/Token';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PacienteService {
-  private pacienteUrl = 'http://192.168.0.102:8000/historias_medicas/paciente/';
+  private pacienteUrl = environment.pacienteUrl;
   private token: Token = {
-    access: '',
-    refresh: '',
+    access: null,
+    refresh: null,
   };
 
+  // BehaviorSubject para manejar el estado de los pacientes
+  private pacientesSubject = new BehaviorSubject<Paciente[]>([]);
+  pacientes$ = this.pacientesSubject.asObservable();
+
+  // Inyectamos el servicio para peticiones Http, y el servicio de autenticación
   constructor(private http: HttpClient, private authService: AuthService) {
     this.token.access = this.authService.getAccessToken();
     this.token.refresh = this.authService.getRefreshToken();
@@ -28,6 +34,7 @@ export class PacienteService {
       });
 
       return this.http.post<any>(this.pacienteUrl, paciente, { headers }).pipe(
+        tap(() => this.getPacientes().subscribe()), // Actualiza la lista después de agregar
         map(() => true), // Si la solicitud es exitosa, retorna true
         catchError((error) => {
           // Maneja el error y retorna false
@@ -43,6 +50,9 @@ export class PacienteService {
   }
 
   public getPacientes(): Observable<Paciente[]> {
+    // Limpio el BehaviorSubject de la lista de pacientes, sino hago esto me genera un error
+    this.pacientesSubject.next([]);
+
     this.token.access = this.authService.getAccessToken();
     if (!this.token) {
       throw new Error('Token no disponible. Primero autentíquese.');
@@ -53,6 +63,9 @@ export class PacienteService {
     });
 
     return this.http.get<Paciente[]>(this.pacienteUrl, { headers }).pipe(
+      tap((data: Paciente[]) => {
+        this.pacientesSubject.next(data); // Actualiza el BehaviorSubject con la nueva lista
+      }),
       catchError((error) => {
         if (error.status === 401) {
           // Token expirado o inválido, redirigir al login
@@ -82,6 +95,7 @@ export class PacienteService {
     const url = `${this.pacienteUrl}${id}/`; // URL para eliminar un paciente específico
 
     return this.http.delete<any>(url, { headers }).pipe(
+      tap(() => this.getPacientes().subscribe()), // Actualiza la lista después de agregar
       map(() => true), // Si la eliminación es exitosa, retorna true
       catchError((error) => {
         // Maneja los errores y retorna false
@@ -113,6 +127,7 @@ export class PacienteService {
     const url = `${this.pacienteUrl}${paciente.id}/`;
 
     return this.http.put<any>(url, paciente, { headers }).pipe(
+      tap(() => this.getPacientes().subscribe()), // Actualiza la lista después de agregar
       map(() => true),
       catchError((error) => {
         if (error.status === 401) {

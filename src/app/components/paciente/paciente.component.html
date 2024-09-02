@@ -7,7 +7,7 @@
   <button
     matTooltip="Lista de Pacientes"
     mat-icon-button
-    color=""
+    color="primary"
     class="my-button"
     aria-label="Example icon-button with heart icon"
     routerLink="pacienteList"
@@ -15,13 +15,14 @@
     <i class="fa-solid fa-list"></i>
   </button>
   <button
-    color=""
+    color="warn"
     matTooltip="Agregar un nuevo paciente"
     mat-icon-button
     class="my-button"
     aria-label="Example icon-button with share icon"
-    routerLink="pacienteAdd"
+    (click)="onAdd()"
   >
+    <!--routerLink="pacienteAdd"-->
     <i class="fa-solid fa-plus"></i>
   </button>
 </mat-toolbar>

@@ -4,7 +4,7 @@ import {
   MatDialogClose,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { Paciente } from '../../../interfaces/paciente';
+import { Paciente } from '../../../interfaces/Paciente';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
